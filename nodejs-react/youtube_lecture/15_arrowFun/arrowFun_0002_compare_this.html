@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- 
+    Component 하위에 변수나, 함수 선언 시 에러 발생
+    에러 문구) Uncaught SyntaxError: embedded: Unexpected token (3:8)
+  <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+  -->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    class ClassA extends React.Component {
+      a = 10
+
+      render () {
+        //undefined 출력
+          //최신 버전 js에서는 strict mode 엄격한 모드로 동작되고
+          //function의 경우 this는 undefined가 된다.
+        const a = function () { alert(this.a) }
+        //[object Object] 출력
+          //화살표 함수의 경우 undefined가 아닌 [object Object]가 담겨지게 된다.
+          //쉽게 생각하면 상위의 this를 그대로 가지고 오게 되서..render() 밖에서 선언된 this.a
+          //즉 a 변수의 값을 가져오게 된다.
+          //이런 이유로 render() 메소드 안에서 컴포넌트를 생성하게 된다면 화살표 함수로 사용하는게 좋다.
+        const b = () => { alert(this.a) }
+
+        //a는 exception 문제 발생
+        try{
+          a()
+        }catch(e){
+          alert("A에서 문제가 발생됐습니다.")
+          //TypeError: Cannot read property 'a' of undefined
+          alert(e)
+        }
+
+        //b는 정상 처리
+        try{
+          b()
+        }catch(e){
+          alert("B에서 문제가 발생됐습니다.")
+          //10 출력
+          alert(e)
+        }
+
+        return <h1 style={{color: this.props.color}}>{this.props.children}</h1>
+      }
+    }
+    
+    const element = <div>
+        <ClassA color="red">Hellow React</ClassA>
+      </div>
+    ReactDOM.render(element, root)
+  </script>
+</body>
+
+</html>

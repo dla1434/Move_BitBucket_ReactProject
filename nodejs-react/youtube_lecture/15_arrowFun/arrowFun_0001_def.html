@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <!-- 
+    Component 하위에 변수나, 함수 선언 시 에러 발생
+    에러 문구) Uncaught SyntaxError: embedded: Unexpected token (3:8)
+  <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+  <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.38/browser.min.js"></script>
+  -->
+  <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.js"></script>
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="text/babel">
+    class ClassA extends React.Component {
+      render () {
+        return <h1 style={{color: this.props.color}}>{this.props.children}</h1>
+      }
+    }
+
+    //일반적인 함수 선언
+    function NormalFun (props) {
+      return <h1 style={{color: props.color}}>{props.children}</h1>
+    }
+
+    //익명함수 사용 함수 선언
+      //함수 이름이 명시되어 있지 않는 거 이외에는 일반 함수랑 동일하다.
+      //계속 호출되는 게 아니 한번만 쓰고 안 쓰는 경우에 사용된다.
+    const AnonymousFun = function (props) {
+      return <h1 style={{color: props.color}}>{props.children}</h1>
+    }
+
+    //화살표 함수 - 한 줄에 함수를 정의할 경우에는 {}를 사용하지 않아도 된다
+      //return이 없다 "=>" 다음의 소스가 return 구문이다.
+    const ArrowFunTypeA = (props) => <h1 style={{color: props.color}}>{props.children}</h1>
+
+    //화살표 함수 - 여러 라인으로 함수를 정의할 경우에는 {}를 사용해야 한다.
+      //return이 없다 "=>" 다음의 소스가 return 구문이다.
+    const ArrowFunTypeB = (props) => {
+      <h1 style={{color: props.color}}>{props.children}</h1>
+    }
+
+    //여러개의 컴퍼넌트를 element 변수에 넣어야 하는 경우에 div 같은 엘리멘트 태그로 한번 감싼다.
+      //참고) 하나의 경우 : const element = <ClassA color="red">Hellow React</ClassA>
+    const element = <div>
+      <ClassA color="red">Hellow React</ClassA>
+      <NormalFun color="red">Hellow React</NormalFun>
+      <AnonymousFun color="red">Hellow React</AnonymousFun>
+      <ArrowFunTypeA color="red">Hellow React</ArrowFunTypeA>
+      <ArrowFunTypeB color="red">Hellow React</ArrowFunTypeB>
+    </div>
+    
+    ReactDOM.render(element, root)
+    
+  </script>
+</body>
+
+</html>
