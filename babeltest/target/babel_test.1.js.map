@@ -1,0 +1,1 @@
+{"version":3,"sources":["../source/babel_test.1.js"],"names":["x3","n","test","alertt"],"mappings":"aAAA;AACA,GAAMA,IAAK,QAALA,GAAK,CAACC,CAAD,QAAOA,GAAI,CAAX,EAAX,CACA,GAAMC,MAAO,EAAb,CAEAC,OAAO,OAAP","file":"babel_test.1.js","sourcesContent":["//화살표 함수 예제\r\nconst x3 = (n) => n * 3\r\nconst test = 10\r\n\r\nalertt(\"hello\")"]}
